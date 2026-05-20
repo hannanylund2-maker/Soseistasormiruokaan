@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soseista Sormiruokaan — Helpot reseptit vauvalle ja koko perheelle</title>
+<meta name="description" content="Helpot ja maukkaat sormiruokareseptit vauvalle ja koko perheelle. BLW-inspiraatiota suomalaisille perheille.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FFFBF4; --warm-white: #FFF8EC; --parchment: #F5ECD7;
+    --tan: #E8D5B0; --terracotta: #C8813A; --terracotta-deep: #A0622A;
+    --brown: #5C3317; --brown-muted: #A0725A; --sage: #88B04B;
+    --sage-light: #C8DFA0; --sage-pale: #EDF5E4;
+    --text-primary: #3A1F0D; --text-secondary: #7A5840; --text-muted: #A08060;
+    --border: #E0C89A; --border-light: #EDD9B0;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Lato',sans-serif; background:var(--cream); color:var(--text-primary); font-size:16px; line-height:1.7; }
+
+  nav { background:var(--warm-white); border-bottom:1px solid var(--border-light); padding:0 2rem; display:flex; align-items:center; justify-content:space-between; height:64px; position:sticky; top:0; z-index:100; }
+  .nav-logo { font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--brown); text-decoration:none; }
+  .nav-logo span { color:var(--terracotta); }
+  .nav-links { display:flex; gap:2rem; list-style:none; }
+  .nav-links a { font-size:0.85rem; color:var(--brown-muted); text-decoration:none; letter-spacing:0.05em; text-transform:uppercase; transition:color 0.2s; }
+  .nav-links a:hover { color:var(--terracotta); }
+  .nav-cta { background:var(--terracotta) !important; color:var(--cream) !important; padding:8px 18px; border-radius:30px; font-weight:700 !important; }
+
+  .hero-wrap { background:var(--warm-white); border-bottom:1px solid var(--border-light); }
+  .hero { padding:5rem 2rem 4rem; display:grid; grid-template-columns:1fr 1fr; gap:4rem; max-width:1100px; margin:0 auto; align-items:center; }
+  .hero-tag { display:inline-block; background:var(--sage-pale); color:var(--sage); font-size:0.75rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:5px 14px; border-radius:30px; margin-bottom:1.25rem; }
+  .hero h1 { font-family:'Playfair Display',serif; font-size:3rem; font-weight:400; line-height:1.15; color:var(--brown); margin-bottom:1.25rem; }
+  .hero h1 em { color:var(--terracotta); font-style:italic; }
+  .hero-sub { font-size:1rem; color:var(--text-secondary); line-height:1.75; margin-bottom:2rem; font-weight:300; }
+  .hero-actions { display:flex; gap:1rem; align-items:center; flex-wrap:wrap; }
+  .btn-primary { background:var(--terracotta); color:var(--cream); padding:12px 28px; border-radius:30px; font-size:0.9rem; font-weight:700; text-decoration:none; transition:background 0.2s; }
+  .btn-primary:hover { background:var(--terracotta-deep); }
+  .btn-secondary { color:var(--terracotta); font-size:0.9rem; font-weight:700; text-decoration:none; }
+  .hero-cards { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .hero-card { background:var(--parchment); border-radius:16px; padding:1.5rem; border:1px solid var(--border); }
+  .hero-card.featured { grid-column:1/-1; background:var(--terracotta); display:flex; align-items:center; gap:1rem; }
+  .hero-card.featured h3 { font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:400; color:var(--cream); margin-bottom:2px; }
+  .hero-card.featured p { font-size:0.8rem; color:rgba(255,251,244,0.85); }
+  .hero-icon { font-size:2.5rem; }
+  .stat-num { font-family:'Playfair Display',serif; font-size:2rem; color:var(--terracotta); }
+  .stat-lbl { font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.07em; }
+
+  .filters-wrap { background:var(--cream); padding:3rem 2rem 1rem; max-width:1100px; margin:0 auto; }
+  .section-title { font-family:'Playfair Display',serif; font-size:1.75rem; font-weight:400; color:var(--brown); margin-bottom:0.4rem; }
+  .section-sub { font-size:0.9rem; color:var(--text-muted); margin-bottom:1.5rem; }
+  .filter-pills { display:flex; flex-wrap:wrap; gap:8px; }
+  .pill { background:var(--warm-white); border:1px solid var(--border); color:var(--brown-muted); font-size:0.8rem; font-weight:700; letter-spacing:0.04em; padding:6px 16px; border-radius:30px; cursor:pointer; transition:all 0.15s; text-transform:uppercase; }
+  .pill:hover,.pill.active { background:var(--terracotta); border-color:var(--terracotta); color:var(--cream); }
+
+  .recipes-wrap { padding:2rem 2rem 5rem; max-width:1100px; margin:0 auto; }
+  .recipe-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.5rem; }
+  .recipe-card { background:var(--warm-white); border:1px solid var(--border-light); border-radius:16px; overflow:hidden; cursor:pointer; transition:transform 0.2s,border-color 0.2s; text-decoration:none; display:block; }
+  .recipe-card:hover { transform:translateY(-3px); border-color:var(--terracotta); }
+  .recipe-card-img { height:180px; display:flex; align-items:center; justify-content:center; font-size:4rem; position:relative; }
+  .age-badge { position:absolute; top:12px; left:12px; background:var(--terracotta); color:var(--cream); font-size:0.7rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; padding:3px 10px; border-radius:20px; }
+  .tag-badge { position:absolute; top:12px; right:12px; background:rgba(255,251,244,0.92); color:var(--sage); font-size:0.7rem; font-weight:700; padding:3px 10px; border-radius:20px; border:1px solid var(--sage-light); }
+  .recipe-card-body { padding:1.1rem 1.25rem 1.25rem; }
+  .recipe-card-body h3 { font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:400; color:var(--brown); margin-bottom:0.4rem; }
+  .recipe-card-body p { font-size:0.83rem; color:var(--text-muted); margin-bottom:0.9rem; line-height:1.5; }
+  .recipe-meta { display:flex; gap:1rem; font-size:0.78rem; color:var(--brown-muted); font-weight:700; }
+
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(58,31,13,0.55); z-index:200; align-items:flex-start; justify-content:center; padding:2rem 1rem; overflow-y:auto; }
+  .modal-overlay.open { display:flex; }
+  .modal { background:var(--cream); border-radius:20px; max-width:720px; width:100%; margin:auto; overflow:hidden; animation:up 0.3s ease; }
+  @keyframes up { from{transform:translateY(20px);opacity:0} to{transform:translateY(0);opacity:1} }
+  .modal-header { height:220px; display:flex; align-items:center; justify-content:center; font-size:5rem; position:relative; border-bottom:1px solid var(--border-light); }
+  .modal-close { position:absolute; top:14px; right:14px; width:36px; height:36px; background:rgba(255,251,244,0.9); border:1px solid var(--border); border-radius:50%; cursor:pointer; font-size:1.1rem; color:var(--brown-muted); display:flex; align-items:center; justify-content:center; }
+  .modal-body { padding:2rem 2.5rem 3rem; }
+  .modal-age { display:inline-block; background:var(--sage-pale); color:var(--sage); font-size:0.75rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:4px 12px; border-radius:20px; margin-bottom:0.75rem; }
+  .modal-body h2 { font-family:'Playfair Display',serif; font-size:2rem; font-weight:400; color:var(--brown); margin-bottom:0.5rem; }
+  .modal-desc { color:var(--text-secondary); font-size:0.95rem; line-height:1.7; margin-bottom:1.75rem; }
+  .meta-row { display:flex; gap:1rem; margin-bottom:2rem; padding-bottom:1.5rem; border-bottom:1px solid var(--border-light); flex-wrap:wrap; }
+  .meta-item { background:var(--warm-white); border:1px solid var(--border-light); border-radius:12px; padding:10px 18px; text-align:center; }
+  .meta-val { font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--terracotta); }
+  .meta-lbl { font-size:0.7rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.07em; }
+  .sec-head { font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:400; color:var(--brown); margin-bottom:0.9rem; padding-bottom:0.4rem; border-bottom:1px solid var(--border-light); }
+  .ingr-list { list-style:none; margin-bottom:2rem; }
+  .ingr-list li { display:flex; gap:0.75rem; padding:7px 0; border-bottom:1px solid var(--border-light); font-size:0.92rem; color:var(--text-secondary); }
+  .ingr-list li:last-child { border-bottom:none; }
+  .ingr-amt { font-weight:700; color:var(--terracotta); min-width:60px; font-size:0.85rem; }
+  .steps-list { list-style:none; margin-bottom:2rem; }
+  .steps-list li { display:grid; grid-template-columns:32px 1fr; gap:1rem; margin-bottom:1.1rem; }
+  .step-num { width:32px; height:32px; background:var(--terracotta); color:var(--cream); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700; flex-shrink:0; margin-top:2px; }
+  .step-text { font-size:0.92rem; color:var(--text-secondary); line-height:1.65; padding-top:5px; }
+  .tip-box { background:var(--parchment); border:1px solid var(--border); border-left:3px solid var(--terracotta); border-radius:0 10px 10px 0; padding:1rem 1.25rem; font-size:0.88rem; color:var(--brown-muted); line-height:1.6; }
+
+  .about { background:var(--parchment); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:4rem 2rem; }
+  .about-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1.5fr; gap:4rem; align-items:center; }
+  .about-visual { background:var(--warm-white); border:1px solid var(--border); border-radius:20px; padding:2.5rem; text-align:center; }
+  .about-emoji { font-size:4rem; margin-bottom:1rem; }
+  .about-visual h3 { font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:400; color:var(--brown); margin-bottom:0.5rem; }
+  .about-visual p { font-size:0.85rem; color:var(--text-muted); line-height:1.6; }
+  .about-content h2 { font-family:'Playfair Display',serif; font-size:2rem; font-weight:400; color:var(--brown); line-height:1.25; margin-bottom:1rem; }
+  .about-content p { font-size:0.95rem; color:var(--text-secondary); line-height:1.75; margin-bottom:1rem; font-weight:300; }
+  .tag-list { display:flex; flex-wrap:wrap; gap:8px; margin-top:1.5rem; }
+  .tag { background:var(--warm-white); border:1px solid var(--border); color:var(--brown-muted); font-size:0.78rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; padding:5px 14px; border-radius:30px; }
+
+  footer { background:var(--brown); padding:3rem 2rem; text-align:center; }
+  .footer-logo { font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--parchment); margin-bottom:0.75rem; }
+  .footer-logo span { color:var(--terracotta); }
+  footer > p { font-size:0.83rem; color:var(--tan); margin-bottom:1.5rem; }
+  .insta-btn { display:inline-flex; align-items:center; gap:8px; background:var(--terracotta); color:var(--cream); padding:10px 22px; border-radius:30px; font-size:0.85rem; font-weight:700; text-decoration:none; margin-bottom:1.5rem; transition:background 0.2s; }
+  .insta-btn:hover { background:var(--terracotta-deep); }
+  .footer-links { display:flex; justify-content:center; gap:2rem; flex-wrap:wrap; }
+  .footer-links a { font-size:0.8rem; color:var(--brown-muted); text-decoration:none; text-transform:uppercase; letter-spacing:0.06em; }
+  .footer-links a:hover { color:var(--terracotta); }
+
+  @media(max-width:768px) {
+    .hero { grid-template-columns:1fr; gap:2rem; padding:3rem 1.25rem 2.5rem; }
+    .hero h1 { font-size:2.2rem; }
+    .hero-cards { display:none; }
+    .about-inner { grid-template-columns:1fr; }
+    nav { padding:0 1.25rem; }
+    .nav-links { display:none; }
+    .modal-body { padding:1.5rem; }
+    .filters-wrap,.recipes-wrap { padding-left:1.25rem; padding-right:1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">Soseista <span>Sormiruokaan</span></a>
+  <ul class="nav-links">
+    <li><a href="#reseptit">Reseptit</a></li>
+    <li><a href="#aloita">Aloita tästä</a></li>
+    <li><a href="#tietoa">Tietoa</a></li>
+    <li><a href="https://www.instagram.com/soseistasormiruokaan/" class="nav-cta">Instagram</a></li>
+  </ul>
+</nav>
+
+<section class="hero-wrap">
+  <div class="hero">
+    <div>
+      <span class="hero-tag">Sormiruokaa koko perheelle</span>
+      <h1>Helpot reseptit<br><em>vauvasta</em><br>aikuiseen</h1>
+      <p class="hero-sub">Terveellistä, maukasta sormiruokaa suomalaisille perheille — ilman turhaa stressiä. Kaikki reseptit sopivat koko perheelle.</p>
+      <div class="hero-actions">
+        <a href="#reseptit" class="btn-primary">Katso reseptit</a>
+        <a href="#aloita" class="btn-secondary">Mikä on BLW? →</a>
+      </div>
+    </div>
+    <div class="hero-cards">
+      <div class="hero-card featured">
+        <div class="hero-icon">🍌</div>
+        <div><h3>Viikon resepti</h3><p>Banaanimuffinit — 4 ainesta, 15 min</p></div>
+      </div>
+      <div class="hero-card" style="text-align:center">
+        <div class="stat-num">6kk+</div><div class="stat-lbl">kaikki reseptit</div>
+      </div>
+      <div class="hero-card" style="text-align:center">
+        <div class="stat-num">0g</div><div class="stat-lbl">lisättyä sokeria</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="reseptit">
+  <div class="filters-wrap">
+    <h2 class="section-title">Reseptit</h2>
+    <p class="section-sub">Kaikki reseptit sopivat koko perheelle — vain annoskoko muuttuu.</p>
+    <div class="filter-pills">
+      <button class="pill active" data-filter="all">Kaikki</button>
+      <button class="pill" data-filter="6 kk+">6 kk+</button>
+      <button class="pill" data-filter="8 kk+">8 kk+</button>
+      <button class="pill" data-filter="12 kk+">12 kk+</button>
+      <button class="pill" data-filter="Gluteeniton">Gluteeniton</button>
+      <button class="pill" data-filter="Maidoton">Maidoton</button>
+      <button class="pill" data-filter="Nopea">Nopea</button>
+    </div>
+  </div>
+  <div class="recipes-wrap">
+    <div class="recipe-grid" id="recipeGrid"></div>
+  </div>
+</section>
+
+<section id="aloita">
+  <div class="about">
+    <div class="about-inner">
+      <div class="about-visual">
+        <div class="about-emoji">🤲</div>
+        <h3>Mikä on sormiruoka?</h3>
+        <p>Sormiruoka (BLW — Baby Led Weaning) tarkoittaa, että vauva saa syödä itse paloiteltua ruokaa alusta alkaen, omaan tahtiinsa.</p>
+      </div>
+      <div class="about-content" id="tietoa">
+        <h2>Ruokailoa vauvalle<br>ja koko perheelle</h2>
+        <p>Soseista Sormiruokaan on syntynyt omasta kokemuksesta — halusta löytää helppo, stressitön tapa tutustuttaa vauva perheruokaan.</p>
+        <p>Täällä ei ole komplisoituja reseptejä. Ei erikoisaineksia. Vain oikeita, arkisia ruokia joita koko perhe voi syödä — pienestä isoon.</p>
+        <div class="tag-list">
+          <span class="tag">Ei lisättyä sokeria</span>
+          <span class="tag">Perheystävällistä</span>
+          <span class="tag">Allergeenitieto</span>
+          <span class="tag">BLW-ohjeet</span>
+          <span class="tag">Suomalainen</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Soseista <span>Sormiruokaan</span></div>
+  <p>Helpot sormiruokareseptit suomalaisille perheille</p>
+  <a href="https://www.instagram.com/soseistasormiruokaan/" class="insta-btn">📸 Seuraa Instagramissa</a>
+  <div class="footer-links">
+    <a href="#reseptit">Reseptit</a>
+    <a href="#aloita">Aloita tästä</a>
+    <a href="#tietoa">Tietoa</a>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-header" id="modalHeader">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <span id="modalEmoji"></span>
+    </div>
+    <div class="modal-body">
+      <span class="modal-age" id="modalAge"></span>
+      <h2 id="modalTitle"></h2>
+      <p class="modal-desc" id="modalDesc"></p>
+      <div class="meta-row" id="modalMeta"></div>
+      <h3 class="sec-head">Ainekset</h3>
+      <ul class="ingr-list" id="modalIngr"></ul>
+      <h3 class="sec-head">Ohje</h3>
+      <ol class="steps-list" id="modalSteps"></ol>
+      <div class="tip-box" id="modalTip"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const RECIPES = [
+  {
+    emoji:"🍌", title:"Banaanimuffinit",
+    desc:"Helpot ja nopeat muffinit ilman lisättyä sokeria. Täydellinen aamupala tai välipala koko perheelle.",
+    age:"6 kk+", time:"15 min", portions:"12 kpl",
+    tags:["Gluteeniton","Nopea"],
+    bg:"#FFF3E0", imgBg:"#F5CBA7",
+    ingredients:[
+      {amount:"2 kpl",name:"kypsiä banaaneja"},
+      {amount:"2 kpl",name:"kananmunaa"},
+      {amount:"100 g",name:"kaurahiutaleita"},
+      {amount:"1 tl",name:"leivinjauhetta"}
+    ],
+    steps:[
+      "Kuumenna uuni 175°C. Laita muffinipellille paperivuoat.",
+      "Soseuta banaanit haarukalla kulhossa tasaiseksi massaksi.",
+      "Lisää munat ja sekoita hyvin.",
+      "Lisää kaurahiutaleet ja leivinjauhe. Sekoita tasaiseksi.",
+      "Lusikoi taikina muffinivuokiin noin 3/4 täyteen.",
+      "Paista 175°C noin 15–18 minuuttia, kunnes pinta on kullanruskea.",
+      "Anna jäähtyä 5 minuuttia ennen tarjoilua."
+    ],
+    tip:"💡 Vinkki: Mitä kypsemmät (tummanruskeat) banaanit, sen makeammat muffinit! Voit lisätä kourallisen mustikoita tai pienen palan raastettua porkkanaa vaihtelun vuoksi."
+  },
+  {
+    emoji:"🥦", title:"Kasvispihvit",
+    desc:"Täyteläiset kasvispihvit jotka sopivat yhtä hyvin vauvan sormiin kuin perheen illallispöytään.",
+    age:"8 kk+", time:"20 min", portions:"8 kpl",
+    tags:["Gluteeniton","Maidoton"],
+    bg:"#F0F7E8", imgBg:"#C8DFA0",
+    ingredients:[
+      {amount:"1 kpl",name:"keitetty peruna (n. 150 g)"},
+      {amount:"1 kpl",name:"porkkana, raastettu"},
+      {amount:"½ dl",name:"kaurahiutaleita"},
+      {amount:"1 kpl",name:"kananmuna"}
+    ],
+    steps:[
+      "Keitä peruna kypsäksi, anna jäähtyä ja soseuta haarukalla.",
+      "Raasta porkkana hienoksi raasteeksi.",
+      "Sekoita kaikki ainekset yhteen kulhossa.",
+      "Muotoile massasta pieniä pyörylöitä tai pihvejä.",
+      "Paista pannulla öljytilkassa keskilämmöllä 3–4 min per puoli.",
+      "Anna jäähtyä hetki — sisus on aluksi kuuma!"
+    ],
+    tip:"💡 BLW-vinkki: Tee pihveistä pitkänomaisia sormi-muotoon (5 cm × 2 cm) vauvoille 6–9 kk, jotta ne on helppo pitää kämmenessä."
+  },
+  {
+    emoji:"🥚", title:"Munakokkeli",
+    desc:"Arjen nopein proteiinipitoinen aamupala. Valmis 5 minuutissa ja maistuu kaikille.",
+    age:"6 kk+", time:"5 min", portions:"1–2 annosta",
+    tags:["Nopea","Gluteeniton","Maidoton"],
+    bg:"#FFFBF0", imgBg:"#F5DEB3",
+    ingredients:[
+      {amount:"2 kpl",name:"kananmunaa"},
+      {amount:"1 rkl",name:"voita tai kookosöljyä"},
+      {amount:"2 rkl",name:"täysmaitoa tai kasvimaitoa"}
+    ],
+    steps:[
+      "Riko munat kulhoon, lisää maito ja vatkaa haarukalla.",
+      "Sulata voi pannulla matalalla lämmöllä.",
+      "Kaada munaseos pannulle.",
+      "Sekoittele rauhallisesti puulusikalla kunnes munat ovat juuri kypsiä.",
+      "Ota pois liedeltä — kokkeli kypsyy vielä jälkilämmöllä.",
+      "Tarjoa leivän kanssa."
+    ],
+    tip:"💡 Vinkki: Älä kypsennä liikaa — pehmeä ja kostea kokkeli on parempi kuin kuiva. Lisää halutessasi pinaattia tai raastettua juustoa lopussa."
+  },
+  {
+    emoji:"🍠", title:"Bataattisuikaleet",
+    desc:"Yksinkertaisin BLW-aloitusruoka. Pehmeä, makea ja täydellisen kokoinen vauvan kouraan.",
+    age:"6 kk+", time:"25 min", portions:"2 annosta",
+    tags:["Gluteeniton","Maidoton"],
+    bg:"#FFF0E8", imgBg:"#F5C090",
+    ingredients:[
+      {amount:"1 kpl",name:"iso bataatti"},
+      {amount:"1 rkl",name:"oliiviöljyä"},
+      {amount:"½ tl",name:"kanelia (valinnainen)"}
+    ],
+    steps:[
+      "Kuumenna uuni 200°C.",
+      "Kuori bataatti ja leikkaa 1 cm paksuisiksi suikaleiksi (n. 10 cm pitkiä).",
+      "Pyörittele suikaleet öljyssä ja aseta leivinpaperille.",
+      "Paista 200°C 20–25 minuuttia kunnes pehmeät ja kullanruskeat.",
+      "Ripottele kaneli päälle halutessasi.",
+      "Anna jäähtyä — sisus on aluksi hyvin kuuma!"
+    ],
+    tip:"💡 Ideaalinen aloitusruoka! Bataattisuikale on täydellisen pehmeä, makea ja kooltaan juuri sopiva vauvan kämmeneen. Aloita BLW tällä."
+  },
+  {
+    emoji:"🫐", title:"Mustikkapannukakku",
+    desc:"Mehevä uunipannukakku täynnä mustikoita. Sopii aamupalaksi, lounaaksi tai välipalaksi.",
+    age:"8 kk+", time:"30 min", portions:"4 annosta",
+    tags:[],
+    bg:"#F3EFF8", imgBg:"#D8C8F0",
+    ingredients:[
+      {amount:"2 kpl",name:"kananmunaa"},
+      {amount:"3 dl",name:"maitoa tai kasvimaitoa"},
+      {amount:"1,5 dl",name:"vehnäjauhoja tai kaurajauhoja"},
+      {amount:"1 tl",name:"leivinjauhetta"},
+      {amount:"2 dl",name:"mustikoita (tuoreet tai pakaste)"},
+      {amount:"1 rkl",name:"voita vuokaan"}
+    ],
+    steps:[
+      "Kuumenna uuni 200°C. Laita voita uunivuokaan ja anna sulaa uunissa.",
+      "Vatkaa munat, maito, jauhot ja leivinjauhe tasaiseksi taikinaksi.",
+      "Kaada taikina voideltuun vuokaan.",
+      "Ripottele mustikat taikinan päälle.",
+      "Paista 200°C noin 20–25 minuuttia kunnes pinta on kullanruskea.",
+      "Anna jäähtyä hieman, leikkaa sopiviksi paloiksi."
+    ],
+    tip:"💡 BLW-vinkki: Leikkaa jäähtynyt pannukakku sormenpaksuisiksi suikaleiksi vauvalle. Mehevä rakenne on helppo pureskella ilman hampaita."
+  },
+  {
+    emoji:"🥕", title:"Porkkana-kaurapuuro",
+    desc:"Tavallinen puuro muuttuu jännittäväksi kun lisäät porkkanaraasteen joukkoon. Luonnollisesti makea.",
+    age:"6 kk+", time:"10 min", portions:"2 annosta",
+    tags:["Nopea","Maidoton","Gluteeniton"],
+    bg:"#FFF5E8", imgBg:"#F5C890",
+    ingredients:[
+      {amount:"1 dl",name:"kaurahiutaleita"},
+      {amount:"3 dl",name:"vettä tai kasvimaitoa"},
+      {amount:"1 kpl",name:"porkkana, hienoksi raastettu"},
+      {amount:"½ tl",name:"kanelia"}
+    ],
+    steps:[
+      "Mittaa kaurahiutaleet ja neste kattilaan.",
+      "Lisää porkkanaraaste sekaan.",
+      "Keitä matalalla lämmöllä sekoitellen 5–7 minuuttia.",
+      "Mausta kanelilla.",
+      "Anna jäähtyä sopivaksi ennen tarjoilua."
+    ],
+    tip:"💡 Vinkki: Vauvalle alle 1v tarjoa annos lusikalla syötettynä tai paksuista puurosta tehtyinä palloina. Yli 1-vuotiaille tämä toimii sellaisenaan."
+  }
+];
+
+let activeFilter = "all";
+
+function renderRecipes() {
+  const grid = document.getElementById("recipeGrid");
+  const filtered = activeFilter === "all"
+    ? RECIPES
+    : RECIPES.filter(r => r.age === activeFilter || r.tags.includes(activeFilter));
+  grid.innerHTML = filtered.map((r, i) => `
+    <a class="recipe-card" href="#" onclick="openModal(${RECIPES.indexOf(r)});return false;"
+       style="background:${r.bg};border-color:${r.imgBg}">
+      <div class="recipe-card-img" style="background:${r.imgBg}">
+        <span>${r.emoji}</span>
+        <span class="age-badge">${r.age}</span>
+        ${r.tags[0] ? `<span class="tag-badge">${r.tags[0]}</span>` : ""}
+      </div>
+      <div class="recipe-card-body">
+        <h3>${r.title}</h3>
+        <p>${r.desc}</p>
+        <div class="recipe-meta"><span>⏱ ${r.time}</span><span>🍽 ${r.portions}</span></div>
+      </div>
+    </a>`).join("");
+}
+
+function openModal(i) {
+  const r = RECIPES[i];
+  document.getElementById("modalHeader").style.background = r.imgBg;
+  document.getElementById("modalEmoji").textContent = r.emoji;
+  document.getElementById("modalAge").textContent = r.age;
+  document.getElementById("modalTitle").textContent = r.title;
+  document.getElementById("modalDesc").textContent = r.desc;
+  document.getElementById("modalMeta").innerHTML = `
+    <div class="meta-item"><div class="meta-val">${r.time}</div><div class="meta-lbl">Valmistusaika</div></div>
+    <div class="meta-item"><div class="meta-val">${r.portions}</div><div class="meta-lbl">Annokset</div></div>
+    <div class="meta-item"><div class="meta-val">${r.age}</div><div class="meta-lbl">Ikäsuositus</div></div>`;
+  document.getElementById("modalIngr").innerHTML = r.ingredients
+    .map(ing => `<li><span class="ingr-amt">${ing.amount}</span><span>${ing.name}</span></li>`).join("");
+  document.getElementById("modalSteps").innerHTML = r.steps
+    .map((s,n) => `<li><div class="step-num">${n+1}</div><div class="step-text">${s}</div></li>`).join("");
+  document.getElementById("modalTip").textContent = r.tip;
+  document.getElementById("modal").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal() {
+  document.getElementById("modal").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+document.getElementById("modal").addEventListener("click", e => { if(e.target===e.currentTarget) closeModal(); });
+document.querySelectorAll(".pill").forEach(p => {
+  p.addEventListener("click", function() {
+    document.querySelectorAll(".pill").forEach(x => x.classList.remove("active"));
+    this.classList.add("active");
+    activeFilter = this.dataset.filter;
+    renderRecipes();
+  });
+});
+
+renderRecipes();
+</script>
+</body>
+</html>
